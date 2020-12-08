@@ -16,6 +16,10 @@
 
 package org.cloudfoundry.client.v3;
 
+import static org.cloudfoundry.util.tuple.TupleUtils.function;
+
+import java.time.Duration;
+
 import org.cloudfoundry.AbstractIntegrationTest;
 import org.cloudfoundry.CloudFoundryVersion;
 import org.cloudfoundry.IfCloudFoundryVersion;
@@ -39,13 +43,10 @@ import org.cloudfoundry.util.PaginationUtils;
 import org.cloudfoundry.util.ResourceUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
-
-import java.time.Duration;
-
-import static org.cloudfoundry.util.tuple.TupleUtils.function;
 
 @IfCloudFoundryVersion(greaterThanOrEqualTo = CloudFoundryVersion.PCF_2_1)
 public final class ServiceInstancesTest extends AbstractIntegrationTest {

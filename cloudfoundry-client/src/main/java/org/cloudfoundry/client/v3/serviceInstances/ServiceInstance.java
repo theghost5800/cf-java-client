@@ -16,14 +16,15 @@
 
 package org.cloudfoundry.client.v3.serviceInstances;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.List;
+
 import org.cloudfoundry.Nullable;
 import org.cloudfoundry.client.v3.LastOperation;
 import org.cloudfoundry.client.v3.MaintenanceInfo;
 import org.cloudfoundry.client.v3.Metadata;
 import org.cloudfoundry.client.v3.Resource;
 
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Base class for responses that are service instances
