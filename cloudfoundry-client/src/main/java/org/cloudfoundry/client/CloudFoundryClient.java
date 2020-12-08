@@ -63,6 +63,7 @@ import org.cloudfoundry.client.v3.processes.Processes;
 import org.cloudfoundry.client.v3.routes.RoutesV3;
 import org.cloudfoundry.client.v3.serviceInstances.ServiceInstancesV3;
 import org.cloudfoundry.client.v3.servicebindings.ServiceBindingsV3;
+import org.cloudfoundry.client.v3.servicebrokers.ServiceBrokersV3;
 import org.cloudfoundry.client.v3.serviceofferings.ServiceOfferingsV3;
 import org.cloudfoundry.client.v3.serviceplans.ServicePlansV3;
 import org.cloudfoundry.client.v3.spaces.SpacesV3;
@@ -247,6 +248,11 @@ public interface CloudFoundryClient {
      * Main entry point to the Cloud Foundry Service Brokers Client API
      */
     ServiceBrokers serviceBrokers();
+
+    /**
+     * Main entry point to the Cloud Foundry Service Brokers V3 Client API
+     */
+    ServiceBrokersV3 serviceBrokersV3();
 
     /**
      * Main entry point to the Cloud Foundry Service Instances Client API
