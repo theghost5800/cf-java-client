@@ -16,6 +16,10 @@
 
 package org.cloudfoundry.client.v3;
 
+import static org.cloudfoundry.util.tuple.TupleUtils.function;
+
+import java.time.Duration;
+
 import org.cloudfoundry.AbstractIntegrationTest;
 import org.cloudfoundry.CloudFoundryVersion;
 import org.cloudfoundry.IfCloudFoundryVersion;
@@ -26,12 +30,12 @@ import org.cloudfoundry.client.v2.serviceplans.ListServicePlansRequest;
 import org.cloudfoundry.client.v2.serviceplans.ServicePlanResource;
 import org.cloudfoundry.client.v2.services.ListServicesRequest;
 import org.cloudfoundry.client.v2.services.ServiceResource;
-import org.cloudfoundry.client.v3.serviceInstances.ListServiceInstancesRequest;
-import org.cloudfoundry.client.v3.serviceInstances.ListSharedSpacesRelationshipRequest;
-import org.cloudfoundry.client.v3.serviceInstances.ListSharedSpacesRelationshipResponse;
-import org.cloudfoundry.client.v3.serviceInstances.ShareServiceInstanceRequest;
-import org.cloudfoundry.client.v3.serviceInstances.ShareServiceInstanceResponse;
-import org.cloudfoundry.client.v3.serviceInstances.UnshareServiceInstanceRequest;
+import org.cloudfoundry.client.v3.serviceinstances.ListServiceInstancesRequest;
+import org.cloudfoundry.client.v3.serviceinstances.ListSharedSpacesRelationshipRequest;
+import org.cloudfoundry.client.v3.serviceinstances.ListSharedSpacesRelationshipResponse;
+import org.cloudfoundry.client.v3.serviceinstances.ShareServiceInstanceRequest;
+import org.cloudfoundry.client.v3.serviceinstances.ShareServiceInstanceResponse;
+import org.cloudfoundry.client.v3.serviceinstances.UnshareServiceInstanceRequest;
 import org.cloudfoundry.client.v3.spaces.CreateSpaceRequest;
 import org.cloudfoundry.client.v3.spaces.CreateSpaceResponse;
 import org.cloudfoundry.client.v3.spaces.SpaceRelationships;
@@ -39,13 +43,10 @@ import org.cloudfoundry.util.PaginationUtils;
 import org.cloudfoundry.util.ResourceUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
-
-import java.time.Duration;
-
-import static org.cloudfoundry.util.tuple.TupleUtils.function;
 
 @IfCloudFoundryVersion(greaterThanOrEqualTo = CloudFoundryVersion.PCF_2_1)
 public final class ServiceInstancesTest extends AbstractIntegrationTest {

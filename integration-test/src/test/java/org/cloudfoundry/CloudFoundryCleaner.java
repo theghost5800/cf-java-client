@@ -16,7 +16,18 @@
 
 package org.cloudfoundry;
 
-import com.github.zafarkhaja.semver.Version;
+import static org.cloudfoundry.CloudFoundryVersion.PCF_1_12;
+import static org.cloudfoundry.CloudFoundryVersion.PCF_2_1;
+import static org.cloudfoundry.util.tuple.TupleUtils.function;
+import static org.cloudfoundry.util.tuple.TupleUtils.predicate;
+
+import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Supplier;
+
+import javax.net.ssl.SSLException;
+
 import org.cloudfoundry.client.CloudFoundryClient;
 import org.cloudfoundry.client.v2.applications.ApplicationResource;
 import org.cloudfoundry.client.v2.applications.DeleteApplicationRequest;
@@ -69,9 +80,9 @@ import org.cloudfoundry.client.v2.userprovidedserviceinstances.UserProvidedServi
 import org.cloudfoundry.client.v2.users.UserResource;
 import org.cloudfoundry.client.v3.Metadata;
 import org.cloudfoundry.client.v3.Relationship;
-import org.cloudfoundry.client.v3.serviceInstances.ListSharedSpacesRelationshipRequest;
-import org.cloudfoundry.client.v3.serviceInstances.ListSharedSpacesRelationshipResponse;
-import org.cloudfoundry.client.v3.serviceInstances.UnshareServiceInstanceRequest;
+import org.cloudfoundry.client.v3.serviceinstances.ListSharedSpacesRelationshipRequest;
+import org.cloudfoundry.client.v3.serviceinstances.ListSharedSpacesRelationshipResponse;
+import org.cloudfoundry.client.v3.serviceinstances.UnshareServiceInstanceRequest;
 import org.cloudfoundry.client.v3.spaces.GetSpaceRequest;
 import org.cloudfoundry.client.v3.spaces.GetSpaceResponse;
 import org.cloudfoundry.client.v3.spaces.UpdateSpaceRequest;
@@ -106,21 +117,13 @@ import org.cloudfoundry.util.PaginationUtils;
 import org.cloudfoundry.util.ResourceUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.github.zafarkhaja.semver.Version;
+
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.util.function.Tuples;
 import reactor.util.retry.Retry;
-
-import javax.net.ssl.SSLException;
-import java.time.Duration;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Supplier;
-
-import static org.cloudfoundry.CloudFoundryVersion.PCF_1_12;
-import static org.cloudfoundry.CloudFoundryVersion.PCF_2_1;
-import static org.cloudfoundry.util.tuple.TupleUtils.function;
-import static org.cloudfoundry.util.tuple.TupleUtils.predicate;
 
 final class CloudFoundryCleaner {
 

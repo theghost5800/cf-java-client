@@ -16,28 +16,25 @@
 
 package org.cloudfoundry.client.v3.serviceinstances;
 
-import org.cloudfoundry.client.v3.Relationship;
-import org.junit.Test;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.immutables.value.Value;
 
-public class ShareServiceInstanceRequestTest {
+/**
+ * The request payload for the Unshare Service Instance operation.
+ */
+@Value.Immutable
+abstract class _UnshareServiceInstanceRequest {
 
-    @Test(expected = IllegalStateException.class)
-    public void noServiceInstanceId() {
-        ShareServiceInstanceRequest.builder()
-            .data(Relationship.builder()
-                .id("test-space-id")
-                .build())
-            .build();
-    }
+    /**
+     * The service instance id
+     */
+    @JsonIgnore
+    abstract String getServiceInstanceId();
 
-    @Test
-    public void valid() {
-        ShareServiceInstanceRequest.builder()
-            .serviceInstanceId("test-service-instance-id")
-            .data(Relationship.builder()
-                .id("test-space-id")
-                .build())
-            .build();
-    }
+    /**
+     * The space id
+     */
+    @JsonIgnore
+    abstract String getSpaceId();
 
 }

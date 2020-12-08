@@ -16,6 +16,11 @@
 
 package org.cloudfoundry.reactor.client;
 
+import java.util.Collections;
+import java.util.Map;
+
+import javax.annotation.PostConstruct;
+
 import org.cloudfoundry.client.CloudFoundryClient;
 import org.cloudfoundry.client.v2.applications.ApplicationsV2;
 import org.cloudfoundry.client.v2.applicationusageevents.ApplicationUsageEvents;
@@ -62,8 +67,10 @@ import org.cloudfoundry.client.v3.organizations.OrganizationsV3;
 import org.cloudfoundry.client.v3.packages.Packages;
 import org.cloudfoundry.client.v3.processes.Processes;
 import org.cloudfoundry.client.v3.routes.RoutesV3;
-import org.cloudfoundry.client.v3.serviceInstances.ServiceInstancesV3;
 import org.cloudfoundry.client.v3.servicebindings.ServiceBindingsV3;
+import org.cloudfoundry.client.v3.servicebrokers.ServiceBrokersV3;
+import org.cloudfoundry.client.v3.serviceinstances.ServiceInstancesV3;
+import org.cloudfoundry.client.v3.serviceofferings.ServiceOfferings;
 import org.cloudfoundry.client.v3.serviceplans.ServicePlansV3;
 import org.cloudfoundry.client.v3.spaces.SpacesV3;
 import org.cloudfoundry.client.v3.tasks.Tasks;
@@ -115,16 +122,15 @@ import org.cloudfoundry.reactor.client.v3.packages.ReactorPackages;
 import org.cloudfoundry.reactor.client.v3.processes.ReactorProcesses;
 import org.cloudfoundry.reactor.client.v3.routes.ReactorRoutesV3;
 import org.cloudfoundry.reactor.client.v3.servicebindings.ReactorServiceBindingsV3;
+import org.cloudfoundry.reactor.client.v3.servicebrokers.ReactorServiceBrokersV3;
 import org.cloudfoundry.reactor.client.v3.serviceinstances.ReactorServiceInstancesV3;
+import org.cloudfoundry.reactor.client.v3.serviceofferings.ReactorServiceOfferings;
 import org.cloudfoundry.reactor.client.v3.serviceplans.ReactorServicePlansV3;
 import org.cloudfoundry.reactor.client.v3.spaces.ReactorSpacesV3;
 import org.cloudfoundry.reactor.client.v3.tasks.ReactorTasks;
 import org.immutables.value.Value;
-import reactor.core.publisher.Mono;
 
-import javax.annotation.PostConstruct;
-import java.util.Collections;
-import java.util.Map;
+import reactor.core.publisher.Mono;
 
 /**
  * The Reactor-based implementation of {@link CloudFoundryClient}
@@ -343,6 +349,12 @@ abstract class _ReactorCloudFoundryClient implements CloudFoundryClient {
 
     @Override
     @Value.Derived
+    public ServiceBrokersV3 serviceBrokersV3() {
+	return new ReactorServiceBrokersV3(getConnectionContext(), getRootV3(), getTokenProvider(), getRequestTags());
+    }
+
+    @Override
+    @Value.Derived
     public ServiceInstances serviceInstances() {
         return new ReactorServiceInstances(getConnectionContext(), getRootV2(), getTokenProvider(), getRequestTags());
     }
@@ -357,6 +369,12 @@ abstract class _ReactorCloudFoundryClient implements CloudFoundryClient {
     @Value.Derived
     public ServiceKeys serviceKeys() {
         return new ReactorServiceKeys(getConnectionContext(), getRootV2(), getTokenProvider(), getRequestTags());
+    }
+
+    @Override
+    @Value.Derived
+    public ServiceOfferings serviceOfferings() {
+	return new ReactorServiceOfferings(getConnectionContext(), getRootV3(), getTokenProvider(), getRequestTags());
     }
 
     @Override

@@ -16,28 +16,14 @@
 
 package org.cloudfoundry.client.v3.serviceinstances;
 
-import org.cloudfoundry.client.v3.Relationship;
-import org.junit.Test;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.immutables.value.Value;
 
-public class ShareServiceInstanceRequestTest {
-
-    @Test(expected = IllegalStateException.class)
-    public void noServiceInstanceId() {
-        ShareServiceInstanceRequest.builder()
-            .data(Relationship.builder()
-                .id("test-space-id")
-                .build())
-            .build();
-    }
-
-    @Test
-    public void valid() {
-        ShareServiceInstanceRequest.builder()
-            .serviceInstanceId("test-service-instance-id")
-            .data(Relationship.builder()
-                .id("test-space-id")
-                .build())
-            .build();
-    }
+/**
+ * The resource response payload for the List Service Instances operation
+ */
+@JsonSerialize
+@Value.Immutable
+abstract class _ServiceInstanceResource extends ServiceInstance {
 
 }

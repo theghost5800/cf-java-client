@@ -16,28 +16,29 @@
 
 package org.cloudfoundry.client.v3.serviceinstances;
 
-import org.cloudfoundry.client.v3.Relationship;
-import org.junit.Test;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import org.cloudfoundry.Nullable;
+import org.cloudfoundry.client.v3.ToOneRelationship;
+import org.immutables.value.Value;
 
-public class ShareServiceInstanceRequestTest {
+/**
+ * The service instance relationship
+ */
+@JsonDeserialize
+@Value.Immutable
+abstract class _ServiceInstanceRelationships {
 
-    @Test(expected = IllegalStateException.class)
-    public void noServiceInstanceId() {
-        ShareServiceInstanceRequest.builder()
-            .data(Relationship.builder()
-                .id("test-space-id")
-                .build())
-            .build();
-    }
+    /**
+     * The space relationship
+     */
+    @JsonProperty("service_plan")
+    @Nullable
+    abstract ToOneRelationship getServicePlan();
 
-    @Test
-    public void valid() {
-        ShareServiceInstanceRequest.builder()
-            .serviceInstanceId("test-service-instance-id")
-            .data(Relationship.builder()
-                .id("test-space-id")
-                .build())
-            .build();
-    }
-
+    /**
+     * The space relationship
+     */
+    @JsonProperty("space")
+    abstract ToOneRelationship getSpace();
 }

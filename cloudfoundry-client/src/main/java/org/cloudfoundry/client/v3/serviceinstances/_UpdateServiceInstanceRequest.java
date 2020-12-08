@@ -16,28 +16,29 @@
 
 package org.cloudfoundry.client.v3.serviceinstances;
 
-import org.cloudfoundry.client.v3.Relationship;
-import org.junit.Test;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.cloudfoundry.client.v3.Metadata;
+import org.immutables.value.Value;
 
-public class ShareServiceInstanceRequestTest {
+/**
+ * The request payload for the Update Application operation
+ */
+@JsonSerialize
+@Value.Immutable
+abstract class _UpdateServiceInstanceRequest {
 
-    @Test(expected = IllegalStateException.class)
-    public void noServiceInstanceId() {
-        ShareServiceInstanceRequest.builder()
-            .data(Relationship.builder()
-                .id("test-space-id")
-                .build())
-            .build();
-    }
+    /**
+     * The metadata
+     */
+    @JsonProperty("metadata")
+    abstract Metadata getMetadata();
 
-    @Test
-    public void valid() {
-        ShareServiceInstanceRequest.builder()
-            .serviceInstanceId("test-service-instance-id")
-            .data(Relationship.builder()
-                .id("test-space-id")
-                .build())
-            .build();
-    }
+    /**
+     * The service instance id
+     */
+    @JsonIgnore
+    abstract String getServiceInstanceId();
 
 }

@@ -16,28 +16,38 @@
 
 package org.cloudfoundry.client.v3.serviceinstances;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import org.cloudfoundry.AllowNulls;
+import org.cloudfoundry.Nullable;
+import org.cloudfoundry.client.v3.Link;
 import org.cloudfoundry.client.v3.Relationship;
-import org.junit.Test;
+import org.immutables.value.Value;
 
-public class ShareServiceInstanceRequestTest {
+import java.util.List;
+import java.util.Map;
 
-    @Test(expected = IllegalStateException.class)
-    public void noServiceInstanceId() {
-        ShareServiceInstanceRequest.builder()
-            .data(Relationship.builder()
-                .id("test-space-id")
-                .build())
-            .build();
-    }
+/**
+ * The response payload for the Share Service Instance operation
+ */
+@JsonDeserialize
+@Value.Immutable
+abstract class _ShareServiceInstanceResponse {
 
-    @Test
-    public void valid() {
-        ShareServiceInstanceRequest.builder()
-            .serviceInstanceId("test-service-instance-id")
-            .data(Relationship.builder()
-                .id("test-space-id")
-                .build())
-            .build();
-    }
+    /**
+     * The space
+     */
+    @JsonProperty("data")
+    @Nullable
+    abstract List<Relationship> getData();
+
+    /**
+     * The links
+     */
+    @AllowNulls
+    @JsonProperty("links")
+    @Nullable
+    abstract Map<String, Link> getLinks();
+
 
 }
