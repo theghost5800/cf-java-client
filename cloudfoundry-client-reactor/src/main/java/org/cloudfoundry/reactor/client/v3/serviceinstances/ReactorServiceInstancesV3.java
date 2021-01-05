@@ -18,6 +18,10 @@ package org.cloudfoundry.reactor.client.v3.serviceinstances;
 
 import java.util.Map;
 
+import org.cloudfoundry.client.v3.serviceInstances.CreateManagedServiceInstanceRequest;
+import org.cloudfoundry.client.v3.serviceInstances.CreateUserProvidedServiceInstanceRequest;
+import org.cloudfoundry.client.v3.serviceInstances.CreateUserProvidedServiceInstanceResponse;
+import org.cloudfoundry.client.v3.serviceInstances.DeleteServiceInstanceRequest;
 import org.cloudfoundry.client.v3.serviceInstances.GetManagedServiceParametersRequest;
 import org.cloudfoundry.client.v3.serviceInstances.GetManagedServiceParametersResponse;
 import org.cloudfoundry.client.v3.serviceInstances.GetUserProvidedCredentialsRequest;
@@ -53,6 +57,25 @@ public final class ReactorServiceInstancesV3 extends AbstractClientV3Operations 
      */
     public ReactorServiceInstancesV3(ConnectionContext connectionContext, Mono<String> root, TokenProvider tokenProvider, Map<String, String> requestTags) {
         super(connectionContext, root, tokenProvider, requestTags);
+    }
+
+    @Override
+    public Mono<Void> delete(DeleteServiceInstanceRequest request) {
+	return delete(request, Void.class, builder -> builder.pathSegment("service_instances", request.getServiceInstanceId()))
+	    .checkpoint();
+    }
+
+    @Override
+    public Mono<Void> createManagedServiceInstance(CreateManagedServiceInstanceRequest request) {
+	return post(request, Void.class, builder -> builder.pathSegment("service_instances"))
+	    .checkpoint();
+    }
+
+    @Override
+    public Mono<CreateUserProvidedServiceInstanceResponse> createUserProvidedServiceInstance(
+	    CreateUserProvidedServiceInstanceRequest request) {
+	return post(request, CreateUserProvidedServiceInstanceResponse.class, builder -> builder.pathSegment("service_instances"))
+	    .checkpoint();
     }
 
     @Override

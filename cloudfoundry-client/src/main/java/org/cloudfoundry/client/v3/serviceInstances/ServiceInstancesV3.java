@@ -23,6 +23,12 @@ import reactor.core.publisher.Mono;
  */
 public interface ServiceInstancesV3 {
     
+    Mono<Void> delete(DeleteServiceInstanceRequest request);
+    
+    Mono<Void> createManagedServiceInstance(CreateManagedServiceInstanceRequest request);
+    
+    Mono<CreateUserProvidedServiceInstanceResponse> createUserProvidedServiceInstance(CreateUserProvidedServiceInstanceRequest request);
+    
     /**
      * Makes the <a href="http://v3-apidocs.cloudfoundry.org/version/release-candidate/#get-parameters-for-a-managed-service-instance">
      * Get parameters for a managed service instance</a> request
